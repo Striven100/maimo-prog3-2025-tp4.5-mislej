@@ -3,13 +3,14 @@ const router = express.Router();
 import Product from "../models/products.js";
 
 const findAllProducts = async (req, res) => {
-    try {
-        const products = await Product.find().select("_id name categories")
-        return res.status(200).send({message: "Todos los productos", products : products})
-    } catch (error) {
-        return res.status(501).send({message: "Hubo un error", error})
-    }
+  try {
+    const products = await Product.find().select("_id name backdrop_path overview rank release_date vote_average vote_count");
+    return res.status(200).send({ message: "Todos los productos", products });
+  } catch (error) {
+    return res.status(501).send({ message: "Hubo un error", error });
+  }
 };
+
 
 const findOneProduct = async (req, res) => {
     const {id} = req.params
