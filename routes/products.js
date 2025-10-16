@@ -4,7 +4,7 @@ import Product from "../models/products.js";
 
 const findAllProducts = async (req, res) => {
   try {
-    const products = await Product.find().select("_id name backdrop_path overview rank release_date vote_average vote_count");
+    const products = await Product.find().select("_id name backdrop_path overview rank release_date vote_average vote_count price");
     return res.status(200).send({ message: "Todos los productos", products });
   } catch (error) {
     return res.status(501).send({ message: "Hubo un error", error });
@@ -15,7 +15,7 @@ const findAllProducts = async (req, res) => {
 const findOneProduct = async (req, res) => {
     const {id} = req.params
     try {
-        const product = await Product.findOne({_id: id}).select("_id name categories backdrop_path release_date vote_average vote_count")
+        const product = await Product.findOne({_id: id}).select("_id name categories backdrop_path release_date vote_average vote_count price")
         return res.status(200).send({message: "Producto encontrado", product})
     } catch (error) {
         return res.status(501).send({message: "Hubo un error", error})
