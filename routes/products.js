@@ -56,7 +56,6 @@ const updateProduct = async (req, res) => {
             return res.status(404).send({message: "No existe el producto", id: id})
         }
 
-        //Valores a actualizar
         product.name = name
 
         await product.save()
@@ -67,7 +66,6 @@ const updateProduct = async (req, res) => {
 }
 
 
-//CRUD endpoints
 router.get("/", findAllProducts);
 router.get("/:id", findOneProduct);
 router.post("/", addProduct);
