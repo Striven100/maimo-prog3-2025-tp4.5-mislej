@@ -3,7 +3,6 @@ import Category from "../models/category.js";
  
 const router = express.Router();
  
-// Crear categoría (name + slug)
 router.post("/", async (req, res) => {
   try {
     const { name, slug } = req.body;
@@ -14,8 +13,7 @@ router.post("/", async (req, res) => {
     return res.status(500).send({ message: "Hubo un error", error });
   }
 });
- 
-// Listar categorías (simple)
+
 router.get("/", async (_req, res) => {
   try {
     const categories = await Category.find().select("_id name slug");
@@ -24,8 +22,7 @@ router.get("/", async (_req, res) => {
     return res.status(500).send({ message: "Hubo un error", error });
   }
 });
- 
-// Productos por categoría (slug o id)  -> ya lo teníamos
+
 router.get("/:key/products", async (req, res) => {
   const { key } = req.params;
   try {
