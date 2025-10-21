@@ -7,6 +7,7 @@ const productSchema = new Schema({
   overview: { type: String },
   rank: { type: String },
   release_date: { type: String },
+  price: { type: String },
   vote_average: { type: Number },
   vote_count: { type: Number },
   categories: [{ type: Schema.Types.ObjectId, ref:"Category" }]
