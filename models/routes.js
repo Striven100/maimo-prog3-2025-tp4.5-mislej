@@ -1,25 +1,27 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 
-const ProductSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  _id: { type: mongoose.Schema.Types.ObjectId, required: true },
-  qty: { type: Number, required: true, min: 1 },
-});
-
-const UserSchema = new mongoose.Schema({
-  username: { type: String, required: true },
-  company: { type: String, required: true },
-  email: { type: String, required: true },
-});
-
-const OrderSchema = new mongoose.Schema(
+const RouteItemSchema = new mongoose.Schema(
   {
-    user: { type: UserSchema, required: true },
-    products: { type: [ProductSchema], required: true },
-    total: {type: Number, required: true}
+    productId: { type: String, required: true },
+    name:      { type: String, required: true },
+    price:     { type: Number, required: true, min: 0 },
+    quantity:  { type: Number, required: true, min: 1 },
   },
-  { timestamps: true }
+  { _id: false }
 );
 
+const RouteSchema = new mongoose.Schema(
+  {
+    name:   { type: String, required: true, trim: true },
+    email:  { type: String, required: true, trim: true, lowercase: true },
+    items:  { type: [RouteItemSchema], required: true, validate: v => Array.isArray(v) && v.length > 0 },
+    total:  { type: Number, required: true, min: 0 },
+    status: { type: String, enum: ['pending', 'paid', 'cancelled'], default: 'pending' },
+  },
+  {
+    timestamps: true,
+    collection: 'Routes',
+  }
+);
 
-export default mongoose.model("Order", OrderSchema, "Orders");
+module.exports = mongoose.model('Route', RouteSchema);
