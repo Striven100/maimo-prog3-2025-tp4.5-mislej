@@ -65,6 +65,37 @@ const updateProduct = async (req, res) => {
     }
 }
 
+router.get("/", async (_req, res) => {
+  try {
+    const rows = await Product.find().sort({ createdAt: -1 });
+    return res.status(200).json({ ok: true, products: rows });
+  } catch (err) {
+    return res.status(500).json({ ok: false, error: "error" });
+  }
+});
+
+router.post("/", async (req, res) => {
+  try {
+    const body = req.body;
+    const name = body.name;
+    if (!name) return res.status(400).json({ ok: false, error: "name requerido" });
+
+    const doc = await Product.create({
+      name: body.name,
+      pixelData: Array.isArray(body.pixelData) ? body.pixelData : [],
+      description: body.description,
+      backdrop_path: body.backdrop_path,
+      price: body.price,
+      categories: Array.isArray(body.categories) ? body.categories : []
+    });
+
+    return res.status(201).json({ ok: true, product: doc });
+  } catch (err) {
+    return res.status(500).json({ ok: false, error: "error" });
+  }
+});
+
+
 
 router.get("/", findAllProducts);
 router.get("/:id", findOneProduct);

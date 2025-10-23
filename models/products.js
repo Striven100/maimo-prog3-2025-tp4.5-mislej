@@ -1,16 +1,15 @@
 import mongoose from "mongoose";
-const Schema = mongoose.Schema;
 
-const productSchema = new Schema({
-  name: { type: String, required: true },
-  backdrop_path: { type: String },
-  overview: { type: String },
-  rank: { type: String },
-  release_date: { type: String },
-  price: { type: String },
-  vote_average: { type: Number },
-  vote_count: { type: Number },
-  categories: [{ type: Schema.Types.ObjectId, ref:"Category" }]
-}, { timestamps: true });
+const ProductSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    pixelData: { type: [String], default: [] },
+    description: { type: String },
+    backdrop_path: { type: String },
+    price: { type: String },
+    categories: { type: [String], default: [] }
+  },
+  { timestamps: true }
+);
 
-export default mongoose.model("Product", productSchema, "Products");
+export default mongoose.model("Product", ProductSchema, "Products");
