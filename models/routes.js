@@ -1,24 +1,24 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
 const ItemSchema = new mongoose.Schema(
   {
-    productId: { type: String, required: true },
-    name: { type: String, required: true },
-    price: { type: String, required: true },
-    quantity: { type: Number, required: true, min: 1 },
+    productId: String,
+    name: String,
+    price: String,
+    quantity: Number,
   },
   { _id: false }
-);
+)
 
 const RouteSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    email: { type: String, required: true },
-    items: { type: [ItemSchema], required: true },
-    total: { type: String, required: true },
+    name: String,
+    email: String,
+    items: [ItemSchema],
+    total: String,
     status: { type: String, default: "pending" },
   },
   { timestamps: true }
-);
+)
 
-export default mongoose.model("Route", RouteSchema, "Routes");
+export default mongoose.model("Route", RouteSchema, "Routes")
